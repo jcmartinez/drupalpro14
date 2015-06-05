@@ -17,11 +17,6 @@ WWW_ROOT="${HOME}/websites"         # Fullpath to where websites will be install
 LOGS="${WWW_ROOT}/logs"   	        # Fullpath to where symlink to LAMP logfiles will be stored
 CONFIGS="${WWW_ROOT}/config"        # Fullpath to where symlink to LAMP config will be stored
 
-##
-# UPDATE UBUNTU 14.04
-apt-get update
-apt-get $OPT_APTGET upgrade
-
 # CORE INSTALL
 # note: you'll need to enter a root password for mysql
 sudo apt-get $OPT_APTGET install apache2 php5 php5-dev libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd mariadb-server-5.5
@@ -171,8 +166,4 @@ sudo -u $WWWOwner -g $WWWOwner ln -s $DIRHome/.config/geany/codebrainz/colorsche
 
 # Install Filezilla
 sudo apt-get install filezilla
-
-
-
-
 

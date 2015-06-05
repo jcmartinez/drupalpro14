@@ -1,7 +1,5 @@
 #!/bin/bash
 
-## DO NOT RUN THIS WITH SUDO ----> just bash filename.sh
-
 ##################################
 # Install Netbeans in Ubuntu 14.04
 ##################################

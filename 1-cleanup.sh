@@ -7,6 +7,11 @@ set -e
 # or if you don't need this software.
 ########################################################
 
+##
+# UPDATE UBUNTU 14.04
+sudo apt-get update
+sudo apt-get $OPT_APTGET upgrade
+
 # 0mb
 sudo apt-get autoremove
 

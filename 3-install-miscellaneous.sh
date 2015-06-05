@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-## DO NOT RUN THIS WITH SUDO ----> just bash filename.sh
-
 ###########################################
 # Additional configurations on Ubuntu 14.04
 ###########################################
