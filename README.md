@@ -17,6 +17,8 @@ IMPORTANT: During the installation you will be asked to create a user account. M
 
 Once the installation is done login to your new system using your "drupalpro" account and the password that you selected.
 
+Note: If you install Ubuntu in a VirtualBox machine you may want to install also the VirtualBox guest additions. If you are installing in a physical machine ignore this note. 
+
 ##Update Ubuntu for the first time
 
 Open the terminal by pressing Ctrl+Alt+t and type the following two commands:
