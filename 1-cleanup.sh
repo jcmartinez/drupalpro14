@@ -76,6 +76,7 @@ sudo apt-get clean
 # Went too far and I removed the control center. Adding it back.
 sudo apt-get install gnome-control-center
 sudo apt-get install unity-control-center-signon
+sudo apt-get install libgnomekbd-common
 
 # Tweak some annoyances
 
@@ -84,4 +85,9 @@ gsettings set com.canonical.desktop.interface scrollbar-mode normal
 
 # Show username on panel.
 gsettings set com.canonical.indicator.session show-real-name-on-panel true
+
+# Install gnome flashback.
+sudo apt-get install gnome-session-flashback
+sudo apt-get install compizconfig-settings-manager
+sudo apt-get install indicator-applet-appmenu
 
