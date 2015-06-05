@@ -53,6 +53,7 @@ sudo sed -i 's/allow_url_fopen = On/allow_url_fopen = Off/g' $php_ini
 # Install upload progress (warning in D7)
 sudo pecl -q install uploadprogress
 echo "extension=uploadprogress.so" | sudo tee /etc/php5/mods-available/uploadprogress.ini > /dev/null
+sudo php5enmod uploadprogress
 
 if ! grep -xq "\[xdebug\]" $php_ini
 then
@@ -69,6 +70,14 @@ XDEBUG
 fi
 
 ## Configure APACHE
+# Replace default config file with optimized version from
+# https://github.com/gregrickaby/The-Perfect-Apache-Configuration.git
+git clone https://github.com/gregrickaby/The-Perfect-Apache-Configuration.git perfect_apache_config
+sudo mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.original
+sudo mv perfect_apache_config/http.conf /etc/apache2/apache2.conf
+sudo chown root:root /etc/apache2/apache2.conf
+sudo rm -rf perfect_apache_config
+
 # Stops Apache complaining about not knowing the FQDN
 echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
 sudo a2enconf fqdn.conf
@@ -104,12 +113,12 @@ mkdir -p "${LOGS}"
 # Create symlink to Apache log directory.
 ln -s      	/var/log/apache2  "${LOGS}/apache-access-log"
 
-# php error logs are configured in php.ini  (changed in install-3-lamp.sh)
+# php error logs are configured in php.ini.
 sudo touch 	/var/log/php-error.log
 sudo chmod g+w /var/log/php-error.log
 ln -s      	/var/log/php-error.log                	"${LOGS}/php-error.log"
 
-# MySQL error and slow query logs (changed in install-2-lamp.sh)
+# MySQL error and slow query logs.
 sudo touch 	/var/log/mysql/error.log
 sudo chmod g+w /var/log/mysql/error.log
 ln -s      	/var/log/mysql/error.log              	"${LOGS}/mysql-error.log"
