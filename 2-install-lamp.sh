@@ -6,16 +6,16 @@
 
 # SCRIPT VARIABLES
 WWWOwner="drupalpro"                # user
-WWWGroup="www-data"               # apache group
-DIRHome="/home/$WWWOwner"  # user home path
-DIRwww="$DIRHome/websites"    # path to website projects directory
-VER_GEANY_SCHEMES="1.22"  # Version of colorschemes for geany
-OPT_APTGET="-y"                        # APT-GET options
+WWWGroup="www-data"                 # apache group
+DIRHome="/home/$WWWOwner"           # user home path
+DIRwww="$DIRHome/websites"          # path to website projects directory
+VER_GEANY_SCHEMES="1.22"            # Version of colorschemes for geany
+OPT_APTGET="-y"                     # APT-GET options
 
 #======================================| PATHS
-WWW_ROOT="${HOME}/websites"   # Fullpath to where websites will be installed
-LOGS="${WWW_ROOT}/logs"   	# Fullpath to where symlink to LAMP logfiles will be stored
-CONFIGS="${WWW_ROOT}/config"  # Fullpath to where symlink to LAMP config will be stored
+WWW_ROOT="${HOME}/websites"         # Fullpath to where websites will be installed
+LOGS="${WWW_ROOT}/logs"   	        # Fullpath to where symlink to LAMP logfiles will be stored
+CONFIGS="${WWW_ROOT}/config"        # Fullpath to where symlink to LAMP config will be stored
 
 ##
 # UPDATE UBUNTU 14.04
@@ -24,7 +24,7 @@ apt-get $OPT_APTGET upgrade
 
 # CORE INSTALL
 # note: you'll need to enter a root password for mysql
-apt-get $OPT_APTGET install apache2 php5 libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd mariadb-server-5.5
+sudo apt-get $OPT_APTGET install apache2 php5 php5-dev libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd mariadb-server-5.5
 
 ## config php apache DEV
 
@@ -38,7 +38,7 @@ fi
 ## Configure PHP
 # sudo sed -i 's/find_this/replace_with_this/g' infile1 infile2 etc
 sudo sed -i 's/short_open_tag = On/short_open_tag = Off/g' $php_ini
-sudo sed -i 's/memory_limit = \d{1-3}M/memory_limit = 512M/g' $php_ini
+sudo sed -i 's/memory_limit = .*/memory_limit = 512M/g' $php_ini
 sudo sed -i 's/error_reporting = .*/error_reporting = E_ALL | E_STRICT/g' $php_ini
 sudo sed -i 's/display_errors = Off/display_errors = On/g' $php_ini
 sudo sed -i 's/html_errors = Off/html_errors = On/g' $php_ini
@@ -52,7 +52,7 @@ sudo sed -i 's/allow_url_fopen = On/allow_url_fopen = Off/g' $php_ini
 
 # Install upload progress (warning in D7)
 sudo pecl -q install uploadprogress
-echo "extension=uploadprogress.so" | sudo tee /etc/php5/apache2/conf.d/uploadprogress.ini > /dev/null
+echo "extension=uploadprogress.so" | sudo tee /etc/php5/mods-available/uploadprogress.ini > /dev/null
 
 if ! grep -xq "\[xdebug\]" $php_ini
 then
@@ -101,14 +101,7 @@ sudo sed -i 's/# /\/\/ /g'        	/etc/php5/cli/conf.d/imap.ini
 #======================================| Log Files
 mkdir -p "${LOGS}"
 
-# Apache error logs are configured in the VirtualHosts section of each website (default from apache2.conf)
-sudo touch 	/var/log/apache2/error.log
-sudo chmod g+w /var/log/apache2/error.log
-ln -s      	/var/log/apache2            	"${LOGS}/apache-error-log"
-
-# This file catches any unconfigured log info for virtualhosts (default from apache2.conf)
-sudo touch 	/var/log/apache2/other_vhosts_access.log
-sudo chmod g+w /var/log/apache2/other_vhosts_access.log
+# Create symlink to Apache log directory.
 ln -s      	/var/log/apache2  "${LOGS}/apache-access-log"
 
 # php error logs are configured in php.ini  (changed in install-3-lamp.sh)
