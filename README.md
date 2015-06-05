@@ -1,13 +1,13 @@
 DrupalPro14
 ===========
 
-This is a collection of shell script that can be run in a clean installation of Ubuntu 14.04 (64bits) desktop edition in order to build a Drupal development environment similar to the preconfigured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
+This is a collection of shell script that can be run in a clean installation of Ubuntu 14.04 (64bits) desktop edition in order to build a Drupal development environment similar to the pre-configured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
 
 This work is derived from the QuickStrat and DrupalPro projects (see credits below).
 
-This code has been tested in a VirtualBox machine but should work in a physical machine after after applying some security hardening to the system.
+This code has been tested in a VirtualBox machine but should work in a physical machine after applying some security hardening to the system.
 
-#How use
+#How to use
 
 ##Install Ubuntu
 
