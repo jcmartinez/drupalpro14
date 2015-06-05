@@ -104,12 +104,12 @@ mkdir -p "${LOGS}"
 # Apache error logs are configured in the VirtualHosts section of each website (default from apache2.conf)
 sudo touch 	/var/log/apache2/error.log
 sudo chmod g+w /var/log/apache2/error.log
-ln -s      	/var/log/apache2/error.log            	"${LOGS}/apache-error.log"
+ln -s      	/var/log/apache2            	"${LOGS}/apache-error-log"
 
 # This file catches any unconfigured log info for virtualhosts (default from apache2.conf)
 sudo touch 	/var/log/apache2/other_vhosts_access.log
 sudo chmod g+w /var/log/apache2/other_vhosts_access.log
-ln -s      	/var/log/apache2/other_vhosts_access.log  "${LOGS}/apache-access.log"
+ln -s      	/var/log/apache2  "${LOGS}/apache-access-log"
 
 # php error logs are configured in php.ini  (changed in install-3-lamp.sh)
 sudo touch 	/var/log/php-error.log
