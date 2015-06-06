@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 ########################################################
 # Remove Drupal non-development stuff from Ubuntu 14.04
@@ -16,7 +15,7 @@ sudo apt-get update
 sudo apt-get $OPT_APTGET upgrade
 
 # 0mb
-sudo apt-get $OPT_APTGET autoremove
+sudo apt-get autoremove
 
 # 305mb - Libre Office
 sudo apt-get $OPT_APTGET purge libreoffice-gnome  libreoffice-draw  libreoffice-help-en-us  libreoffice-style-tango  libreoffice-impress  libreoffice-math  libreoffice-gtk  libreoffice-common  uno-libs3  python-uno  libreoffice-style-human  ure  libreoffice-base-core  libreoffice-calc  libreoffice-emailmerge  libreoffice-core libreoffice-writer
@@ -62,7 +61,7 @@ sudo apt-get $OPT_APTGET purge gwibber gwibber-service libgwibber-gtk2 gwibber-s
 sudo apt-get $OPT_APTGET purge gnome-user-guide ubuntu-docs
 
 #  63mb - Printing
-sudo apt-get $OPT_APTGET purge cups cups-bsd cups-client cups-common ghostscript ghostscript-x ghostscript-cups cups-driver-gutenprint python-cups system-config-printer-common system-config-printer-gnome system-config-printer-udev foo2zjs foomatic-db-engine foomatic-filters min12xxw openprinting-ppds pnm2ppa pxljr splix hplip-data hplip hpijs libcupsmime1 libcupsdriver1 libgutenprint2 libcupsppdc1
+sudo apt-get $OPT_APTGET purge cups cups-bsd cups-client cups-common ghostscript ghostscript-x cups-driver-gutenprint python-cups system-config-printer-common system-config-printer-gnome system-config-printer-udev foomatic-db-engine foomatic-filters openprinting-ppds splix hplip-data hplip libcupsmime1 libgutenprint2 libcupsppdc1
 # 15mb - Scanner drivers
 sudo apt-get $OPT_APTGET purge sane-utils simple-scan libsane libsane-hpaio
 
@@ -70,7 +69,7 @@ sudo apt-get $OPT_APTGET purge thunderbird*
 
 # remove packages that were automatically installed to satisfy dependencies for other packages and are now no longer needed.
 
-sudo apt-get $OPT_APTGET autoremove 
+sudo apt-get autoremove 
 
 # clear out the local repository of retrieved package files. It removes everything but the lock file from /var/cache/apt/archives/ and /var/cache/apt/archives/partial/.
 
@@ -91,7 +90,7 @@ sudo apt-get $OPT_APTGET purge unity-webapps-common
 gsettings set com.canonical.desktop.interface scrollbar-mode normal
 
 # Get back your menu bars.
-sudo $OPT_APTGET apt-get autoremove appmenu-gtk appmenu-gtk3 appmenu-qt
+sudo apt-get autoremove appmenu-gtk appmenu-gtk3 appmenu-qt
 
 # Show username on panel.
 gsettings set com.canonical.indicator.session show-real-name-on-panel true

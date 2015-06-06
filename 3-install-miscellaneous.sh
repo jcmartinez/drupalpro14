@@ -1,16 +1,17 @@
 #!/bin/bash
-set -e
 
 ###########################################
 # Additional configurations on Ubuntu 14.04
 ###########################################
 
+# SCRIPT VARIABLES
+OPT_APTGET="-y"                     # APT-GET options
 
 # Install a gui for the firewall
-sudo apt-get install gufw
+sudo apt-get $OPT_APTGET install gufw
 
 # Install compression tools
-sudo apt-get install p7zip-rar p7zip-full unrar zip unzip rar
+sudo apt-get $OPT_APTGET install p7zip-rar p7zip-full unrar zip unzip rar
 
 #Change Defaults for guake
 echo "Configuring guake"

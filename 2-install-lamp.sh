@@ -159,7 +159,7 @@ sudo chmod -R 2775 $DIRwww
 sudo chmod g+s $DIRwww
 
 # Install Desktop development apps
-sudo apt-get install gitg meld nautilus-compare guake geany diodon synaptic indicator-multiload gksu
+sudo apt-get $OPT_APTGET install gitg meld nautilus-compare guake geany diodon synaptic indicator-multiload gksu
 
 # Setup GEANY
 [ ! -d $DIRHome/.config/geany ] && sudo -u $WWWOwner -g $WWWOwner mkdir -p $DIRHome/.config/geany
@@ -170,5 +170,5 @@ sudo -u $WWWOwner -g $WWWOwner mkdir -p $DIRHome/.config/geany/colorschemes
 sudo -u $WWWOwner -g $WWWOwner ln -s $DIRHome/.config/geany/codebrainz/colorschemes/* $DIRHome/.config/geany/colorschemes/
 
 # Install Filezilla
-sudo apt-get install filezilla
+sudo apt-get $OPT_APTGET install filezilla
 

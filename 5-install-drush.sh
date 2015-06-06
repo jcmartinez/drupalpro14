@@ -4,11 +4,12 @@
 # Install Drush on Ubuntu 14.04
 ###############################
 
-set -e  # Stop in case of error.
+# SCRIPT VARIABLES
+OPT_APTGET="-y"                     # APT-GET options
 
 # Install Drush.
 # Ensure the Curl dependency is installed.
-sudo apt-get -y install curl
+sudo apt-get $OPT_APTGET install curl
 
 # Download the Composer installer and pass it to php.
 sudo curl -sS https://getcomposer.org/installer | php
@@ -34,5 +35,6 @@ sudo mv drush_addons /usr/share/drush/commands/quickstart
 drush cc drush
 
 #reboot
+sudo apt-get $OPT_APTGET autoremove
 sudo reboot now
 
