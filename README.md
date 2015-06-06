@@ -15,9 +15,9 @@ Install Ubuntu 14.04 (64bits) Desktop Edition on your computer.
 
 IMPORTANT: During the installation you will be asked to create a user account. Make sure that the username for this account is: drupalpro
 
-Once the installation is done login to your new system using your "drupalpro" account and the password that you selected.
+Once the installation is done you can login to your new system using your "drupalpro" account and the password that you selected.
 
-Note: If you install Ubuntu in a VirtualBox machine you may want to install also the VirtualBox guest additions. If you are installing in a physical machine ignore this note. 
+Note: At this point if you are installing Ubuntu in a VirtualBox machine you may want to install also the VirtualBox guest additions. Instructions at https://www.virtualbox.org/manual/ch04.html (look under "Installing the Linux Guest Additions"). If you are installing in a physical machine ignore this note. 
 
 ##Update Ubuntu for the first time
 
@@ -80,6 +80,10 @@ drush qc all --domain=d7.dev --codepath=/home/drupalpro/websites/d7.dev --makefi
 Now you should be able to visit your website using a browser and typing http://d7.dev in the address bar.
 
 If you want to install another site use the same command above and modify the variables --domain and --codepath.
+
+If you want to destroy a site run the following:
+
+drush qd --domain=d7.dev
 
 #ToDos
 

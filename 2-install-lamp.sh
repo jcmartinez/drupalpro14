@@ -60,18 +60,23 @@ xdebug.remote_handler=dbgp
 xdebug.remote_mode=req
 xdebug.remote_host=10.0.0.1
 xdebug.remote_port=9000
+xdebug.max_nesting_level=256
 XDEBUG
 
 fi
 
 ## Configure APACHE
+
 # Replace default config file with optimized version from
 # https://github.com/gregrickaby/The-Perfect-Apache-Configuration.git
-git clone https://github.com/gregrickaby/The-Perfect-Apache-Configuration.git perfect_apache_config
-sudo mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.original
-sudo mv perfect_apache_config/http.conf /etc/apache2/apache2.conf
-sudo chown root:root /etc/apache2/apache2.conf
-sudo rm -rf perfect_apache_config
+#
+# Commented out because it failed to restart apache. Needs a fix.
+#
+#git clone https://github.com/gregrickaby/The-Perfect-Apache-Configuration.git perfect_apache_config
+#sudo mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf.original
+#sudo mv perfect_apache_config/http.conf /etc/apache2/apache2.conf
+#sudo chown root:root /etc/apache2/apache2.conf
+#sudo rm -rf perfect_apache_config
 
 # Stops Apache complaining about not knowing the FQDN
 echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
