@@ -7,6 +7,14 @@ This work is derived from the QuickStrat and DrupalPro projects (see credits bel
 
 This code has been tested in a VirtualBox machine but should work in a physical machine after applying some security hardening to the system.
 
+Tested on:
+
+Ubuntu 14.04 (64bit)
+Lubuntu 14.04 (64bit)
+Linux Mint 17.1 (64bit) Cinnamon - See known issue and a temporary solution below before installing Drush.
+
+Note: For Lubuntu and Linux Mint use the selective installation method explained below and skip the cleanup 1-cleanup.sh script. 
+
 #How to use
 
 ##Install Ubuntu
@@ -84,6 +92,10 @@ If you want to install another site use the same command above and modify the va
 If you want to destroy a site run the following:
 
 drush qd --domain=d7.dev
+
+#Known issues
+
+When running the installation of Drush in Linux Mint the file $HOME/.bashrc does not exists and it has to be created before the line of text `export PATH="$HOME/.composer/vendor/bin:$PATH"` can be added to this file. A temporary solution is to create this file manually before running 5-install-drush.sh. A permanent solution could be adding a condition to the script to test whether the file exist and create it if not. 
 
 #ToDos
 

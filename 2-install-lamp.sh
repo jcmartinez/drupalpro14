@@ -19,7 +19,7 @@ CONFIGS="${WWW_ROOT}/config"        # Fullpath to where symlink to LAMP config w
 
 # CORE INSTALL
 # note: you'll need to enter a root password for mysql
-sudo apt-get $OPT_APTGET install apache2 php5 php5-dev libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd mariadb-server-5.5
+sudo apt-get $OPT_APTGET install apache2 php5 php5-dev php-pear libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd mariadb-server-5.5
 
 ## config php apache DEV
 
