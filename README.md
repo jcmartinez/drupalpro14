@@ -1,7 +1,7 @@
 DrupalPro14
 ===========
 
-This is a collection of shell script that can be run in a clean installation of Ubuntu 14.04 (64bits) desktop edition in order to build a Drupal development environment similar to the pre-configured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
+This is a collection of shell scripts that can be run in a clean installation of Ubuntu 14.04 (64bits) desktop edition in order to build a Drupal development environment similar to the pre-configured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
 
 This work is derived from the QuickStrat and DrupalPro projects (see credits below).
 
@@ -9,9 +9,9 @@ This code has been tested in a VirtualBox machine but should work in a physical 
 
 Tested on:
 
-Ubuntu 14.04 (64bit)
-Lubuntu 14.04 (64bit)
-Linux Mint 17.1 (64bit) Cinnamon - See known issue and a temporary solution below before installing Drush.
+-[x] Ubuntu 14.04 (64bit)
+-[x] Lubuntu 14.04 (64bit)
+-[x] Linux Mint 17.1 (64bit) Cinnamon
 
 Note: For Lubuntu and Linux Mint use the selective installation method explained below and skip the cleanup 1-cleanup.sh script. 
 
@@ -92,10 +92,6 @@ If you want to install another site use the same command above and modify the va
 If you want to destroy a site run the following:
 
 drush qd --domain=d7.dev
-
-#Known issues
-
-When running the installation of Drush in Linux Mint the file $HOME/.bashrc does not exists and it has to be created before the line of text `export PATH="$HOME/.composer/vendor/bin:$PATH"` can be added to this file. A temporary solution is to create this file manually before running 5-install-drush.sh. A permanent solution could be adding a condition to the script to test whether the file exist and create it if not. 
 
 #ToDos
 
