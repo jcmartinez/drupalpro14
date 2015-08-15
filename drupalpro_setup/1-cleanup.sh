@@ -8,7 +8,7 @@
 
 # SCRIPT VARIABLES
 OPT_APTGET="-y"                     # APT-GET options
-
+ 
 ##
 # UPDATE UBUNTU 14.04
 sudo apt-get update

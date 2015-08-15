@@ -3,7 +3,7 @@
 ##############################
 # Install LAMP on Ubuntu 14.04
 ##############################
-
+ 
 # SCRIPT VARIABLES
 WWWOwner="vagrant"                # user
 WWWGroup="www-data"                 # apache group

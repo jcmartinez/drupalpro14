@@ -6,7 +6,7 @@
 
 # SCRIPT VARIABLES
 OPT_APTGET="-y"                     # APT-GET options
-
+ 
 # Install Drush.
 # Ensure the Curl dependency is installed.
 sudo apt-get $OPT_APTGET install curl

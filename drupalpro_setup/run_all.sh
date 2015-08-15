@@ -11,5 +11,5 @@ bash 2-install-lamp.sh
 
 # if i wanted to use an IDE in my virtual box, i wouldn't use vagrant
 # bash 4-install-netbeans.sh
-
+ 
 bash 5-install-drush.sh
