@@ -7,7 +7,7 @@
 ###################################################################
 
 # This assumes that Ubuntu was installed using “drupalpro” as the user name.
-WWWOwner="drupalpro" 
+WWWOwner="vagrant" 
 
 # Add current user to sudoers file - careful, this line could brick the box.
 clear

@@ -1,19 +1,11 @@
-DrupalPro14
+DrupalPro14 with Vagrant
 ===========
 
-This is a collection of shell scripts that can be run in a clean installation of Ubuntu 14.04 (64bits) desktop edition in order to build a Drupal development environment similar to the pre-configured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
+This is a vagrant project based on https://github.com/jcmartinez/drupalpro14. by wrapping the automations DrupalPro offers with the Vagrant enviroment, you can quickly create independent, sharable and disposable development enviroment for drupal.
+
+DrupalPro is a collection of shell scripts that can be run in order to build a Drupal development environment similar to the pre-configured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
 
 This work is derived from the QuickStrat and DrupalPro projects (see credits below).
-
-This code has been tested in a VirtualBox machine but should work in a physical machine after applying some security hardening to the system.
-
-Tested on:
-
--[x] Ubuntu 14.04 (64bit)
--[x] Lubuntu 14.04 (64bit)
--[x] Linux Mint 17.1 (64bit) Cinnamon
-
-Note: For Lubuntu and Linux Mint use the selective installation method explained below and skip the cleanup 1-cleanup.sh script. 
 
 #How to use
 

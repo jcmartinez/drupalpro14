@@ -4,5 +4,4 @@
 # sudo apt-get upgrade
 
 cd ~/drupalpro_setup
-pwd
 bash run_all.sh

@@ -101,24 +101,3 @@ sudo apt-get $OPT_APTGET install compizconfig-settings-manager
 sudo apt-get $OPT_APTGET install indicator-applet-appmenu
 sudo apt-get $OPT_APTGET install libgnomekbd-common
 
-# Set a shortcut to Drupalpro14 Documentation
-
-echo '#!/usr/bin/env xdg-open
-[Desktop Entry]
-Version=1.0
-Type=Application
-Terminal=false
-Icon[en_US]=firefox
-Name[en_US]=DrupalPro14 Documentation
-Comment[en_US]=Link to DrupalPro14 Documentation
-Exec=firefox http://www.goingdrupal.com/drupalpro 
-Name=Drupalpro14 Documentation
-Comment=Link to Drupalpro14 Documentation
-Icon=firefox
-' >> '/home/drupalpro/Desktop/DrupalPro14.desktop'
-
-sudo chmod +x /home/drupalpro/Desktop/DrupalPro14.desktop
-
-sudo desktop-file-install /home/drupalpro/Desktop/DrupalPro14.desktop
-
-
