@@ -39,6 +39,9 @@ config.vm.network "private_network", type: "dhcp"
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "drupalpro_setup", "/home/vagrant/drupalpro_setup"
+  config.vm.synced_folder "websites", "/home/vagrant/websites", create: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
