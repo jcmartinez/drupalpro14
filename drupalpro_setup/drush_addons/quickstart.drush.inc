@@ -156,11 +156,11 @@ function _quickstart_params($required) {
   $defaults['domain_'] = $domain_ = str_replace('.','_',$options['domain']);
   // database
   $defaults['dbuser'] = 'root';
-  $defaults['dbpassword'] = 'drupalpro';
+  $defaults['dbpassword'] = '';
   // apache, code, install
   $defaults['codepath'] = quickstart_fixpath("~/websites/" . $options['domain']);
   // code, install (check version)
-  $defaults['makefile'] = quickstart_fixpath("default.make");
+  $defaults['makefile'] = quickstart_fixpath("~/make_templates/default.make");
   // install
   $defaults['profile'] = 'standard';
   $defaults['db-url'] = "mysql://$domain_:$domain_@localhost/$domain_";

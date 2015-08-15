@@ -40,6 +40,9 @@ sudo mv drush_addons/make_templates ~/make_templates
 sudo mv drush_addons /usr/share/drush/commands/quickstart
 drush cc drush
 
+sudo ln -s ~/drupalpro_setup/drush_addons/make_templates/* ~/make_templates
+sudo ln -s ~/drupalpro_setup/drush_addons/*.inc /usr/share/drush/commands/quickstart
+
 #reboot
 sudo apt-get $OPT_APTGET autoremove
 sudo reboot now

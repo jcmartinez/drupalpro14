@@ -9,10 +9,10 @@ This work is derived from the QuickStrat and DrupalPro projects (see credits bel
 
 #How to use
 
-##Install Ubuntu
+##Install Vagrant
+
 
 Install Ubuntu 14.04 (64bits) Desktop Edition on your computer.
-
 IMPORTANT: During the installation you will be asked to create a user account. Make sure that the username for this account is: drupalpro
 
 Once the installation is done you can login to your new system using your "drupalpro" account and the password that you selected.
