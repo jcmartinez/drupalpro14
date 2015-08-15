@@ -10,9 +10,16 @@ I'm assuming you're familiar with Vagrant, if not going through their [Getting S
 
 You can [istall Vagrant](https://www.vagrantup.com/downloads.html) on any OS, but for this readme I'll assume you're using Windows.
 
+[Having git](https://git-scm.com/) is not a must, but it would make you're life much easier.
+
 #How to use
 
 ##1. Setup the Machine
+if you're indeed using Windows, typing this would solve some line-ending issues -
+
+    git config --global core.autocrlf input
+
+and now you can type
 
     git clone https://github.com/IdanCo/drupalpro14.git c:\myproject
     cd c:\myproject
@@ -20,7 +27,7 @@ You can [istall Vagrant](https://www.vagrantup.com/downloads.html) on any OS, bu
     ... doing vagrant stuff ...
     vagrant reload
 
-If it's you're first time, you'll have to wait for vagrant to download and install all the dependencies, and maybe approve some VirtualBox warnings. This could take some time. The *reload* at the end is to make sure all changes were implemented. That's it!
+If it's you're first time, you'll have to wait for vagrant to download and install all the dependencies, and maybe approve some VirtualBox warnings. This could take some time. The *reload* at the end is to make sure all changes were implemented.
 
 ##2. Create your first drupal website
 
@@ -72,7 +79,7 @@ TODO
 
 # Working with DrupalPro
 ## 1. Create Multiple Websites
-you can create more website simply by typing
+you can create more website simply by connecting to your machine (*vagrant ssh*) and typing
 
     drush qc --domain=mywebsite.dev
 
@@ -102,9 +109,11 @@ If you want to destroy a site run the following:
 # Passwords
 **ubuntu**: vagrant/vagrant
 **mysql**: root/vagrant 
+**drupal**: admin/admin
 
 #ToDos
 
+there are some non-critical errors when running the scripts. it would be nice to get rid of them.
 
 #Credits
 

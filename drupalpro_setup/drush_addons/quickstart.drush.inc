@@ -156,7 +156,7 @@ function _quickstart_params($required) {
   $defaults['domain_'] = $domain_ = str_replace('.','_',$options['domain']);
   // database
   $defaults['dbuser'] = 'root';
-  $defaults['dbpassword'] = '';
+  $defaults['dbpassword'] = 'vagrant';
   // apache, code, install
   $defaults['codepath'] = quickstart_fixpath("~/websites/" . $options['domain']);
   // code, install (check version)
