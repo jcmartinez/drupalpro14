@@ -72,4 +72,6 @@ config.vm.network "private_network", type: "dhcp"
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
+
+  config.vm.provision :shell, path: "bootstrap.sh", privileged: false
 end
