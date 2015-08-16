@@ -1,14 +1,14 @@
 DrupalPro14 with Vagrant
 ===========
 
-By wrapping the automations DrupalPro offers with the Vagrant enviroment, you can quickly create independent, sharable and disposable pre-configured development enviroment for drupal.
+By wrapping the automations DrupalPro offers with the Vagrant environment, you can quickly create independent, sharable and disposable pre-configured development enviroment for drupal.
 
 This is a vagrant project based on [DrupalPro14](https://github.com/jcmartinez/drupalpro14), which is derived from the QuickStrat and DrupalPro projects (see credits below).
 
 #Prerequisites
 I'm assuming you're familiar with Vagrant, if not going through their [Getting Started](http://docs.vagrantup.com/v2/getting-started/index.html) tutorial should be enough.
 
-You can [istall Vagrant](https://www.vagrantup.com/downloads.html) on any OS, but for this readme I'll assume you're using Windows.
+You can [install Vagrant](https://www.vagrantup.com/downloads.html) on any OS, but for this readme I'll assume you're using Windows.
 
 [Having git](https://git-scm.com/) is not a must, but it would make you're life much easier.
 
@@ -39,14 +39,14 @@ This will open an ssh connection with the machine. all tasks you're used to doin
 
     drush qc --domain=d7.dev
 
-This will make the DrupalPro do its magic. When it's finished you'll have a complete drupal installation ready to go. to be able to access it throgh the host machine you'll have to add this line to you hosts file
+This will make the DrupalPro do its magic. When it's finished you'll have a complete drupal installation ready to go. to be able to access it through the host machine you'll have to add this line to you hosts file
 
     192.168.33.10 d71.dev
 
 now you can access the newly created website by opening your browser and typing http://d7.dev. btw, this ip is configurable through the *vagrantfile* in your project's root.
 ## 3. Develop!
 
-Open your favourite IDE and point it at your source files, which awaits inside the *websites* folder of your project's root.
+Open your favorite IDE and point it at your source files, which awaits inside the *websites* folder of your project's root.
 
 #Working with vagrant
 ##1. Basic Actions
@@ -65,7 +65,7 @@ restart the machine, just for that fresh post-boot smell:
 destroy the machine, when the project is over, or when you really need to start over:
 
     vagrant destroy
-btw, even after destorying the machine you can create a new one simply by typing *vagrant up* again.
+Even after destorying the machine you can create a clean new one with the same original settings simply by typing *vagrant up* again.
 
 ##2. Sharing
 vagrant lets you easily share you're work with others by typing
@@ -73,7 +73,7 @@ vagrant lets you easily share you're work with others by typing
     vagrant share
 TODO: how to share specific url and not just the whole machine
 
-## 3. Debuging
+## 3. Debugging
 TODO
 
 
@@ -107,9 +107,30 @@ If you want to destroy a site run the following:
 
 
 # Passwords
-**ubuntu**: vagrant/vagrant
-**mysql**: root/vagrant 
-**drupal**: admin/admin
+
+> **ubuntu**: vagrant/vagrant
+> **mysql**: root/vagrant 
+> **drupal**: admin/admin
+
+# Troubleshooting
+## SSH Issues
+Assuming you've installed Git and Vagrant, trying to access the virtual machine through ssh may result in this error -
+
+> `ssh` executable not found in any directories in the %PATH% variable. Is an SSH client installed? Try installing Cygwin, MinGW or Git, all of which contain an SSH client. Or use your favorite SSH client with the following authentication information shown below:
+> ...
+
+this can easily be fixed with
+
+    set PATH=%PATH%;C:\Program Files (x86)\Git\bin
+
+But this remains in affect only during your current session. To fix this for good, I recommend going through [this guide](http://www.computerhope.com/issues/ch000549.htm).
+## SYMBOLIC LINKS
+Vagrant is [still problematic](http://docs.vagrantup.com/v2/synced-folders/basic_usage.html) on this issue. This could only be a problem when you try to access the logs or the config folders which are inside the websites folder on your **host** machine. In case linking failed, these folders will be empty, but you can still access these files through their original place in the **guest** machine:
+
+> **logs** - /var/log
+> **apache config** - /etc/apache2
+> **php** - /etc/php5
+> **mysql** - /etc/mysql
 
 #ToDos
 
