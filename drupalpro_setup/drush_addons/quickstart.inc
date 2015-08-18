@@ -360,6 +360,8 @@ function quickstart_create_install($domain, $params) {
   }
 
   drush_log("\nURL:  http://".$params['domain']."\nAdmin user:  ".$params['account-name']."\nAdmin password: ".$params['account-pass'], 'ok');
+  $myip = shell_exec("ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'");
+  drush_log("\n*** Make sure to add this line to your hosts file - \n\n " . trim($myip) . "   " . $params['domain'], 'ok');
 }
 
 /**
