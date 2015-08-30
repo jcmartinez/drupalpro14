@@ -3,7 +3,7 @@
 ##################################
 # Install Netbeans in Ubuntu 14.04
 ##################################
-
+ 
 # SCRIPT VARIABLES
 OPT_APTGET="-y"                     # APT-GET options
 

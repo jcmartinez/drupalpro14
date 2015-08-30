@@ -6,7 +6,7 @@
 
 # SCRIPT VARIABLES
 OPT_APTGET="-y"                     # APT-GET options
-
+ 
 # Install Drush.
 # Ensure the Curl dependency is installed.
 sudo apt-get $OPT_APTGET install curl
@@ -36,11 +36,14 @@ drush --version
 
 # Install Drush addons.
 sudo mkdir -p /usr/share/drush/commands/
-sudo mv drush_addons/make_templates ~/make_templates
-sudo mv drush_addons /usr/share/drush/commands/quickstart
+sudo mkdir -p /usr/share/drush/commands/quickstart
+sudo mkdir -p $HOME/make_templates
+sudo ln -s $HOME/drupalpro_setup/drush_addons/make_templates/* $HOME/make_templates
+sudo ln -s $HOME/drupalpro_setup/drush_addons/make_templates/* $HOME/.drush
+sudo ln -s $HOME/drupalpro_setup/drush_addons/*.inc /usr/share/drush/commands/quickstart
 drush cc drush
 
 #reboot
 sudo apt-get $OPT_APTGET autoremove
-sudo reboot now
+
 
