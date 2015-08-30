@@ -1,102 +1,141 @@
-DrupalPro14
+DrupalPro14 with Vagrant
 ===========
 
-This is a collection of shell scripts that can be run in a clean installation of Ubuntu 14.04 (64bits) desktop edition in order to build a Drupal development environment similar to the pre-configured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
+By wrapping the automations DrupalPro offers with the Vagrant environment, you can quickly create independent, sharable and disposable pre-configured development enviroment for drupal.
 
-This work is derived from the QuickStrat and DrupalPro projects (see credits below).
+This is a vagrant project based on [DrupalPro14](https://github.com/jcmartinez/drupalpro14), which is derived from the QuickStrat and DrupalPro projects (see credits below).
 
-This code has been tested in a VirtualBox machine but should work in a physical machine after applying some security hardening to the system.
+#Prerequisites
+I'm assuming you're familiar with Vagrant, if not going through their [Getting Started](http://docs.vagrantup.com/v2/getting-started/index.html) tutorial should be enough.
 
-Tested on:
+You can [install Vagrant](https://www.vagrantup.com/downloads.html) on any OS, but for this readme I'll assume you're using Windows.
 
--[x] Ubuntu 14.04 (64bit)
--[x] Lubuntu 14.04 (64bit)
--[x] Linux Mint 17.1 (64bit) Cinnamon
-
-Note: For Lubuntu and Linux Mint use the selective installation method explained below and skip the cleanup 1-cleanup.sh script. 
+[Having git](https://git-scm.com/) is not a must, but it would make you're life much easier.
 
 #How to use
 
-##Install Ubuntu
+##1. Setup the Machine
+if you're indeed using Windows, typing this would solve some line-ending issues -
 
-Install Ubuntu 14.04 (64bits) Desktop Edition on your computer.
+    git config --global core.autocrlf input
 
-IMPORTANT: During the installation you will be asked to create a user account. Make sure that the username for this account is: drupalpro
+and now you can type
 
-Once the installation is done you can login to your new system using your "drupalpro" account and the password that you selected.
+    git clone https://github.com/IdanCo/drupalpro14.git c:\myproject
+    cd c:\myproject
+    vagrant up
+    ... doing vagrant stuff ...
+    vagrant reload
 
-Note: At this point if you are installing Ubuntu in a VirtualBox machine you may want to install also the VirtualBox guest additions. Instructions at https://www.virtualbox.org/manual/ch04.html (look under "Installing the Linux Guest Additions"). If you are installing in a physical machine ignore this note. 
+If it's you're first time, you'll have to wait for vagrant to download and install all the dependencies, and maybe approve some VirtualBox warnings. This could take some time. The *reload* at the end is to make sure all changes were implemented.
 
-##Update Ubuntu for the first time
+##2. Create your first drupal website
 
-Open the terminal by pressing Ctrl+Alt+t and type the following two commands:
+inside the project folder type 
 
- sudo apt-get update
+    vagrant ssh
 
- sudo apt-get upgrade
+This will open an ssh connection with the machine. all tasks you're used to doing in the terminal will be done here.
 
-##Retrieve this code using Git
+    drush qc --domain=d7.dev
 
-###Install Git
+This will make the DrupalPro do its magic. When it's finished you'll have a complete drupal installation ready to go. to be able to access it through the host machine you'll have to add this line to you hosts file
 
-In the terminal type:
+    192.168.33.10 d71.dev
 
- sudo apt-get install git
+now you can access the newly created website by opening your browser and typing http://d7.dev. btw, this ip is configurable through the *vagrantfile* in your project's root.
+## 3. Develop!
 
-###Retrieve this code
+Open your favorite IDE and point it at your source files, which awaits inside the *websites* folder of your project's root.
 
-In the terminal type:
+#Working with vagrant
+##1. Basic Actions
+stop the machine, when you're finished working for today:
 
- git clone https://github.com/jcmartinez/drupalpro14.git ~/drupalpro_install
+    vagrant halt
 
-##Run the configuration scripts
+start the machine, when you want to start working again:
 
-In the terminal navigate to the directory where you just cloned the installation scripts:
+    vagrant up
 
- cd ~/drupalpro_install
+restart the machine, just for that fresh post-boot smell:
 
-There are two ways of running the scripts that will set Drupalpro for you (use only one):
+    vagrant reload
 
-A) The fast way - If you want to run all the scripts at once use the run_all.sh script as follows:
+destroy the machine, when the project is over, or when you really need to start over:
 
- bash run_all.sh
+    vagrant destroy
+Even after destorying the machine you can create a clean new one with the same original settings simply by typing *vagrant up* again.
 
-B) The selective way - Run the configuration scripts one-by-one. A good reason for doing so is if you would like to keep the office software that comes with Ubuntu; in this case you would run the scripts as explained below with the exception of 1-cleanup.sh because this script will erase the office package, games, etc. Aother reason could be that you prefer installing a diffrent IDE and don't want to install Netbeans, in this case you don't need to run the script 4-install-betbeans.sh. In case you want to be selective do as follows:
+##2. Sharing
+vagrant lets you easily share you're work with others by typing
 
-bash 0-preparation.sh
+    vagrant share
+TODO: how to share specific url and not just the whole machine
 
-bash 1-cleanup.sh
+## 3. Debugging
+TODO
 
-bash 2-install-lamp.sh
 
-bash 3-install-miscellaneous.sh
+# Working with DrupalPro
+## 1. Create Multiple Websites
+you can create more website simply by connecting to your machine (*vagrant ssh*) and typing
 
-bash 4-install-netbeans.sh
+    drush qc --domain=mywebsite.dev
 
-bash 5-install-drush.sh
+don't forget to add the new record to your hosts file -
 
-##Create your first Drupal site
+    192.168.33.10 mywebsite.dev
 
-In your terminal navigate to the "websites" directory:
+## 2. Use Different Drupal Versions
+to create a drupal 6 site -
 
-cd ~/websites
+    drush qc --domain=d6.dev --makefile=d6.make
 
-... and run the following command to install a Website:
+to create a drupal 8 site -
 
-drush qc all --domain=d7.dev --codepath=/home/drupalpro/websites/d7.dev --makefile=/home/drupalpro/make_templates/d7.make --profile=standard
+    drush qc --domain=d8.dev --makefile=d8.make
 
-Now you should be able to visit your website using a browser and typing http://d7.dev in the address bar.
+more wonders -
 
-If you want to install another site use the same command above and modify the variables --domain and --codepath.
+    drush help qc
 
+## 3. Destroy a Website
 If you want to destroy a site run the following:
 
-drush qd --domain=d7.dev
+    drush qd --domain=d7.dev
+
+
+# Passwords
+
+> **ubuntu**: vagrant/vagrant
+> **mysql**: root/vagrant 
+> **drupal**: admin/admin
+
+# Troubleshooting
+## SSH Issues
+Assuming you've installed Git and Vagrant, trying to access the virtual machine through ssh may result in this error -
+
+> `ssh` executable not found in any directories in the %PATH% variable. Is an SSH client installed? Try installing Cygwin, MinGW or Git, all of which contain an SSH client. Or use your favorite SSH client with the following authentication information shown below:
+> ...
+
+this can easily be fixed with
+
+    set PATH=%PATH%;C:\Program Files (x86)\Git\bin
+
+But this remains in affect only during your current session. To fix this for good, I recommend going through [this guide](http://www.computerhope.com/issues/ch000549.htm).
+## SYMBOLIC LINKS
+Vagrant is [still problematic](http://docs.vagrantup.com/v2/synced-folders/basic_usage.html) on this issue. This could only be a problem when you try to access the logs or the config folders which are inside the websites folder on your **host** machine. In case linking failed, these folders will be empty, but you can still access these files through their original place in the **guest** machine:
+
+> **logs** - /var/log
+> **apache config** - /etc/apache2
+> **php** - /etc/php5
+> **mysql** - /etc/mysql
 
 #ToDos
 
-So far only one IDE environment (Netbeans) has been installed. If you know how to script the installation of other environments please fork this code and it will be added.
+there are some non-critical errors when running the scripts. it would be nice to get rid of them.
 
 #Credits
 
-DrupalPro14 is based on the Quickstart project (https://www.drupal.org/project/quickstart) and the DrupalPro project (https://www.drupal.org/project/drupalpro), the first by Michael Cole (https://www.drupal.org/u/michaelcole) and the later by Mike Stewart (https://www.drupal.org/u/mike-stewart).
+DrupalPro14 is based on the [Quickstart project](https://www.drupal.org/project/quickstart) and the [DrupalPro project](https://www.drupal.org/project/drupalpro), the first by [Michael Cole](https://www.drupal.org/u/michaelcole) and the later by [Mike Stewart](https://www.drupal.org/u/mike-stewart).

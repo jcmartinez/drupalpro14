@@ -3,9 +3,9 @@
 ##############################
 # Install LAMP on Ubuntu 14.04
 ##############################
-
+ 
 # SCRIPT VARIABLES
-WWWOwner="drupalpro"                # user
+WWWOwner="vagrant"                # user
 WWWGroup="www-data"                 # apache group
 DIRHome="/home/$WWWOwner"           # user home path
 DIRwww="$DIRHome/websites"          # path to website projects directory
@@ -19,7 +19,14 @@ CONFIGS="${WWW_ROOT}/config"        # Fullpath to where symlink to LAMP config w
 
 # CORE INSTALL
 # note: you'll need to enter a root password for mysql
-sudo apt-get $OPT_APTGET install apache2 php5 php5-dev php-pear libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd mariadb-server-5.5
+sudo apt-get $OPT_APTGET install apache2 php5 php5-dev php-pear libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd
+
+# Making sure we won't stop for passwords
+export DEBIAN_FRONTEND=noninteractive
+sudo debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password password PASS'
+sudo debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_again password PASS'
+sudo apt-get install -y mariadb-server-5.5
+mysql -uroot -pPASS -e "SET PASSWORD = PASSWORD('vagrant');"
 
 ## config php apache DEV
 
