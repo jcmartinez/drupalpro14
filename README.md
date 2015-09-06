@@ -93,6 +93,35 @@ If you want to destroy a site run the following:
 
 drush qd --domain=d7.dev
 
+#Possible issues
+
+##Drush installation may fail
+
+In some cases the installation of Drush fails. You can test whether Drush is installed by running the command:
+
+drush --version
+
+If the above can't detect the version of Drush it is probably because the script 5-install-drush.sh failled to around the following lines:
+
+FILE = $HOME/.bashrc
+if [ -f $FILE ];
+then
+   sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
+else
+   echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> $HOME/.bashrc
+fi
+
+Sugestions to fix this in the script are welcome. In the meantime to fix the problem you need to determine whether the file ~/.bashrc was created and then run one of the two commands above accordingly. After that you can run 'drush --version' again to see if Drush got installed.
+
+Las but not least, once Drush gets installed you should run 'drush cc drush' so that it recognizes the addon scripts.
+
+##Apache may give you a access/permission error
+
+If after addig a new site using Drush you get an access denied error while visiting the URL of the new site it may be that Apache don't have the permissions required to execute files. Since permissions are inherited you need to ensure that the directries above your webroot are no restricting apache. In cases when this issue has arised the problem has been solved by giving 755 permission to the drupalpro directory as follows:
+
+cd /home
+sudo chmod 755 -R drupalpro 
+
 #ToDos
 
 So far only one IDE environment (Netbeans) has been installed. If you know how to script the installation of other environments please fork this code and it will be added.
