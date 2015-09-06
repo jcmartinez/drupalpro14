@@ -98,8 +98,8 @@ define('APACHE_TEMPLATE', "
     Options +Indexes +FollowSymLinks +MultiViews
     require all granted
   </Directory>
-  ErrorLog ${APACHE_LOG_DIR}/#DOMAIN#.error.log
-  CustomLog ${APACHE_LOG_DIR}/#DOMAIN#.access.log combined
+  ErrorLog /home/drupalpro/websites/logs/#DOMAIN#.error.log
+  CustomLog /home/drupalpro/websites/logs/#DOMAIN#.access.log combined
 </VirtualHost>
 <IfModule mod_ssl.c>
   <VirtualHost *:443>
@@ -112,8 +112,8 @@ define('APACHE_TEMPLATE', "
       Options +Indexes +FollowSymLinks +MultiViews
       require all granted
     </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/#DOMAIN#.error.log
-    CustomLog ${APACHE_LOG_DIR}/#DOMAIN#.access.log combined
+    ErrorLog /home/drupalpro/websites/logs/#DOMAIN#.error.log
+    CustomLog /home/drupalpro/websites/logs/#DOMAIN#.access.log combined
     SSLEngine on
     SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
     SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
