@@ -23,7 +23,7 @@ composer --version
 composer global require drush/drush:dev-master
 
 # Add Drush to your system path.
-FILE = $HOME/.bashrc
+FILE=$HOME/.bashrc
 if [ -f $FILE ];
 then
    sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
