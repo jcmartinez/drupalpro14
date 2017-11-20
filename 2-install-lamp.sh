@@ -11,19 +11,45 @@ DIRHome="/home/$WWWOwner"           # user home path
 DIRwww="$DIRHome/websites"          # path to website projects directory
 VER_GEANY_SCHEMES="1.22"            # Version of colorschemes for geany
 OPT_APTGET="-y"                     # APT-GET options
+PHP_VERSION="7.1"                   # N.B. The latest XDebug v2.5.5 doesn't support PHP 7.2.
+                                    # https://github.com/geerlingguy/ansible-role-php-xdebug/issues/55
 
 #======================================| PATHS
 WWW_ROOT="${HOME}/websites"         # Fullpath to where websites will be installed
 LOGS="${WWW_ROOT}/logs"   	        # Fullpath to where symlink to LAMP logfiles will be stored
 CONFIGS="${WWW_ROOT}/config"        # Fullpath to where symlink to LAMP config will be stored
 
+# Add Ondrej Sury's PHP PPA repo.
+# https://launchpad.net/~ondrej/+archive/ubuntu/php
+if ! grep -q -s "ondrej/php" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+  sudo apt-add-repository ppa:ondrej/php --yes
+else
+  echo "ondrej/php already in ppa"
+fi
+
+##
+# UPDATE UBUNTU 14.04
+sudo apt-get update
+sudo apt-get $OPT_APTGET upgrade
+
 # CORE INSTALL
 # note: you'll need to enter a root password for mysql
-sudo apt-get $OPT_APTGET install apache2 php5 php5-dev php-pear libapache2-mod-php5 php5-mysql php5-sqlite php5-intl php5-cli php5-xdebug php5-gd mariadb-server-5.5
+
+sudo apt-get $OPT_APTGET install apache2 php${PHP_VERSION} php${PHP_VERSION}-dev php-pear libapache2-mod-php${PHP_VERSION} php${PHP_VERSION}-imap php${PHP_VERSION}-mcrypt php${PHP_VERSION}-mysql php${PHP_VERSION}-sqlite php${PHP_VERSION}-intl php${PHP_VERSION}-cli php${PHP_VERSION}-gd mariadb-server-5.5
+
+# N.B. The latest XDebug v2.5.5 doesn't support PHP 7.2.
+# https://github.com/geerlingguy/ansible-role-php-xdebug/issues/55
+sudo apt-get $OPT_APTGET install php-xdebug
+
+# Operations on Unicode strings are emulated on a best-effort basis.
+# Install the PHP mbstring extension for improved Unicode support.
+sudo apt-get $OPT_APTGET install php${PHP_VERSION}-mbstring
+
+php --version
 
 ## config php apache DEV
 
-php_ini="/etc/php5/apache2/php.ini"
+php_ini="/etc/php/${PHP_VERSION}/apache2/php.ini"
 
 if [ ! -f $php_ini".bak" ]
 then
@@ -46,9 +72,7 @@ sudo sed -i 's/expose_php = On/expose_php = Off/g' $php_ini
 sudo sed -i 's/allow_url_fopen = On/allow_url_fopen = Off/g' $php_ini
 
 # Install upload progress (warning in D7)
-sudo pecl -q install uploadprogress
-echo "extension=uploadprogress.so" | sudo tee /etc/php5/mods-available/uploadprogress.ini > /dev/null
-sudo php5enmod uploadprogress
+sudo apt-get $OPT_APTGET install php-uploadprogress
 
 if ! grep -xq "\[xdebug\]" $php_ini
 then
@@ -90,7 +114,7 @@ sudo service apache2 restart
 
 ## config php cli DEV
 
-php_ini="/etc/php5/cli/php.ini"
+php_ini="/etc/php/${PHP_VERSION}/cli/php.ini"
 
 if [ ! -f $php_ini".bak" ]
 then
@@ -102,10 +126,6 @@ sudo sed -i 's/memory_limit = \d{1-3}M/memory_limit = -1/g' $php_ini
 sudo sed -i 's/error_reporting = .*/error_reporting = E_ALL | E_STRICT/g' $php_ini
 sudo sed -i 's/display_errors = Off/display_errors = On/g' $php_ini
 sudo sed -i 's/html_errors = Off/html_errors = On/g' $php_ini
-
-# Fix comment bug that will show warning on command line
-sudo sed -i 's/# /\/\/ /g'        	/etc/php5/cli/conf.d/mcrypt.ini
-sudo sed -i 's/# /\/\/ /g'        	/etc/php5/cli/conf.d/imap.ini
 
 #======================================| Log Files
 mkdir -p "${LOGS}"
@@ -134,9 +154,9 @@ ln -s /etc/apache2/apache2.conf  	"${CONFIGS}/apache2.conf"
 ln -s /etc/apache2/httpd.conf    	"${CONFIGS}/httpd.conf"
 ln -s /etc/apache2/ports.conf    	"${CONFIGS}/ports.conf"
 ln -s /etc/apache2/sites-enabled/	"${CONFIGS}/apache-sites-enabled"
-sudo chmod -R g+w /etc/php5
-ln -s /etc/php5/apache2/php.ini  	"${CONFIGS}/php-apache.ini"
-ln -s /etc/php5/cli/php.ini      	"${CONFIGS}/php-cli.ini"
+sudo chmod -R g+w /etc/php/${PHP_VERSION}
+ln -s /etc/php/${PHP_VERSION}/apache2/php.ini  	"${CONFIGS}/php-apache.ini"
+ln -s /etc/php/${PHP_VERSION}/cli/php.ini      	"${CONFIGS}/php-cli.ini"
 sudo chmod -R g+w /etc/mysql
 ln -s /etc/mysql/my.cnf          	"${CONFIGS}/mysql.cnf"
 sudo chmod g+w /etc/hosts
