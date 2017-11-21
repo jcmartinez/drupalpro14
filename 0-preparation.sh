@@ -11,7 +11,7 @@ WWWOwner="drupalpro"
 
 # Add current user to sudoers file - careful, this line could brick the box.
 clear
-sudo echo "$WWWOwner ALL=(ALL) NOPASSWD: ALL" | sudo tee -a "/etc/sudoers.d/$WWWOwner" > /dev/null
+echo "$WWWOwner ALL=(ALL) NOPASSWD: ALL" | sudo tee -a "/etc/sudoers.d/$WWWOwner" > /dev/null
 
 sudo chmod 0440 "/etc/sudoers.d/$WWWOwner"
 
