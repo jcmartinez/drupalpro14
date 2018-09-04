@@ -1,6 +1,11 @@
 DrupalPro14
 ===========
 
+Note on Sep. 2018
+A new branch has been added for Ubuntu 18.04. If you are using Ubuntu 18.04, checkout this branch befor running the scripts.
+
+------------
+
 This is a collection of shell scripts that can be run in a clean installation of Ubuntu 14.04 (64bits) desktop edition in order to build a Drupal development environment similar to the pre-configured development environment that was offered for download as a VirtualBox image for Ubuntu 12.04 (32bit).
 
 This work is derived from the QuickStrat and DrupalPro projects (see credits below).
