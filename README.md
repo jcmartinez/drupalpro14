@@ -1,8 +1,7 @@
 DrupalPro14
 ===========
 
-Note on Sep. 2018
-A new branch has been added for Ubuntu 18.04. If you are using Ubuntu 18.04, checkout this branch befor running the scripts.
+Note on Sep. 2018: A new branch has been added for Ubuntu 18.04. If you are using Ubuntu 18.04, checkout this branch before running any of the scripts.
 
 ------------
 
