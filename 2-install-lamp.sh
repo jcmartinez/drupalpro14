@@ -11,45 +11,41 @@ DIRHome="/home/$WWWOwner"           # user home path
 DIRwww="$DIRHome/websites"          # path to website projects directory
 VER_GEANY_SCHEMES="1.22"            # Version of colorschemes for geany
 OPT_APTGET="-y"                     # APT-GET options
-PHP_VERSION="7.1"                   # N.B. The latest XDebug v2.5.5 doesn't support PHP 7.2.
-                                    # https://github.com/geerlingguy/ansible-role-php-xdebug/issues/55
 
 #======================================| PATHS
 WWW_ROOT="${HOME}/websites"         # Fullpath to where websites will be installed
 LOGS="${WWW_ROOT}/logs"   	        # Fullpath to where symlink to LAMP logfiles will be stored
 CONFIGS="${WWW_ROOT}/config"        # Fullpath to where symlink to LAMP config will be stored
 
-# Add Ondrej Sury's PHP PPA repo.
-# https://launchpad.net/~ondrej/+archive/ubuntu/php
-if ! grep -q -s "ondrej/php" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-  sudo apt-add-repository ppa:ondrej/php --yes
-else
-  echo "ondrej/php already in ppa"
-fi
-
 ##
-# UPDATE UBUNTU 14.04
+# UPDATE UBUNTU
 sudo apt-get update
 sudo apt-get $OPT_APTGET upgrade
 
 # CORE INSTALL
 # note: you'll need to enter a root password for mysql
 
-sudo apt-get $OPT_APTGET install apache2 php${PHP_VERSION} php${PHP_VERSION}-dev php-pear libapache2-mod-php${PHP_VERSION} php${PHP_VERSION}-imap php${PHP_VERSION}-mcrypt php${PHP_VERSION}-mysql php${PHP_VERSION}-sqlite php${PHP_VERSION}-intl php${PHP_VERSION}-cli php${PHP_VERSION}-gd mariadb-server-5.5
+sudo apt-get $OPT_APTGET install apache2 libapache2-mod-php
 
-# N.B. The latest XDebug v2.5.5 doesn't support PHP 7.2.
-# https://github.com/geerlingguy/ansible-role-php-xdebug/issues/55
+sudo apt-get $OPT_APTGET install php php-common php-dev php-pear php-imap php-mysql php-sqlite3 php-intl php-cli php-gd php-opcache php-apcu
+
+echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php
+
+#sudo apt-get $OPT_APTGET install mariadb-server mariadb-client
+sudo mysql_secure_installation
+
+# Install Xdebug.
 sudo apt-get $OPT_APTGET install php-xdebug
 
 # Operations on Unicode strings are emulated on a best-effort basis.
 # Install the PHP mbstring extension for improved Unicode support.
-sudo apt-get $OPT_APTGET install php${PHP_VERSION}-mbstring
+sudo apt-get $OPT_APTGET install php-mbstring
 
 php --version
 
 ## config php apache DEV
 
-php_ini="/etc/php/${PHP_VERSION}/apache2/php.ini"
+php_ini="/etc/php/7.2/apache2/php.ini"
 
 if [ ! -f $php_ini".bak" ]
 then
@@ -108,13 +104,14 @@ sudo a2enconf fqdn.conf
 sudo a2enmod ssl
 sudo a2enmod rewrite
 sudo a2dismod cgi
-sudo a2dismod autoindex
+sudo a2dismod -f autoindex
 
 sudo service apache2 restart
+# or sudo systemctl restart apache2
 
 ## config php cli DEV
 
-php_ini="/etc/php/${PHP_VERSION}/cli/php.ini"
+php_ini="/etc/php/7.2/cli/php.ini"
 
 if [ ! -f $php_ini".bak" ]
 then
@@ -131,20 +128,20 @@ sudo sed -i 's/html_errors = Off/html_errors = On/g' $php_ini
 mkdir -p "${LOGS}"
 
 # Create symlink to Apache log directory.
-ln -s      	/var/log/apache2  "${LOGS}/apache-access-log"
+sudo ln -s      	/var/log/apache2  "${LOGS}/apache-access-log"
 
 # php error logs are configured in php.ini.
 sudo touch 	/var/log/php-error.log
 sudo chmod g+w /var/log/php-error.log
-ln -s      	/var/log/php-error.log                	"${LOGS}/php-error.log"
+sudo ln -s      	/var/log/php-error.log                	"${LOGS}/php-error.log"
 
 # MySQL error and slow query logs.
 sudo touch 	/var/log/mysql/error.log
 sudo chmod g+w /var/log/mysql/error.log
-ln -s      	/var/log/mysql/error.log              	"${LOGS}/mysql-error.log"
+sudo ln -s      	/var/log/mysql/error.log              	"${LOGS}/mysql-error.log"
 sudo touch 	/var/log/mysql/mysql-slow.log
 sudo chmod g+w /var/log/mysql/mysql-slow.log
-ln -s      	/var/log/mysql/mysql-slow.log         	"${LOGS}/mysql-slow.log"
+sudo ln -s      	/var/log/mysql/mysql-slow.log         	"${LOGS}/mysql-slow.log"
 
 
 #======================================| Config Files
@@ -154,9 +151,9 @@ ln -s /etc/apache2/apache2.conf  	"${CONFIGS}/apache2.conf"
 ln -s /etc/apache2/httpd.conf    	"${CONFIGS}/httpd.conf"
 ln -s /etc/apache2/ports.conf    	"${CONFIGS}/ports.conf"
 ln -s /etc/apache2/sites-enabled/	"${CONFIGS}/apache-sites-enabled"
-sudo chmod -R g+w /etc/php/${PHP_VERSION}
-ln -s /etc/php/${PHP_VERSION}/apache2/php.ini  	"${CONFIGS}/php-apache.ini"
-ln -s /etc/php/${PHP_VERSION}/cli/php.ini      	"${CONFIGS}/php-cli.ini"
+sudo chmod -R g+w /etc/php/
+ln -s /etc/php//apache2/php.ini  	"${CONFIGS}/php-apache.ini"
+ln -s /etc/php//cli/php.ini      	"${CONFIGS}/php-cli.ini"
 sudo chmod -R g+w /etc/mysql
 ln -s /etc/mysql/my.cnf          	"${CONFIGS}/mysql.cnf"
 sudo chmod g+w /etc/hosts
@@ -191,4 +188,7 @@ sudo -u $WWWOwner -g $WWWOwner ln -s $DIRHome/.config/geany/codebrainz/colorsche
 
 # Install Filezilla
 sudo apt-get $OPT_APTGET install filezilla
+
+# Message
+echo "Visit http://localhost/info.php to see PHP working"
 

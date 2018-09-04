@@ -13,6 +13,9 @@ sudo apt-get $OPT_APTGET install gufw
 # Install compression tools
 sudo apt-get $OPT_APTGET install p7zip-rar p7zip-full unrar zip unzip rar
 
+# Install Guake
+sudo apt-get $OPT_APTGET install guake
+
 #Change Defaults for guake
 echo "Configuring guake"
 gconftool -s /apps/guake/keybindings/global/show_hide --type=string "F4"  	# Change to F4 since F12 means firebug/dev utilities in most browsers
